@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Vue!</title>
+    <script>
+        /**
+         *  - 필터
+         *  필터의 경우 텍스트 변환 목적으로 설계되었습니다. 보다 복잡한 데이터의 변환이 필요한 경우 '계산된 속성'을 사용해야 합니다.
+         *
+         *  'Vue.js'에서는 일반 텍스트 서식이 필요할 때 필터를 정의하여 사용할 수 있습니다.
+         *  필터는 {{ }} Mustache 보간과 v-bind 표현식 두 곳에서 사용할 수 있습니다.
+         *  필터는 Javascript 표현식의 끝에 추가해야 하며 '파이프' 기호를 통해 사용할 수 있습니다..
+         *
+         *  ex) text | filterName
+         *
+         *  - 필터 함수
+         *  필터 함수는 항상 표현식의 값을 첫번째 전달 인자로 받습니다.
+         *
+         *  가이드 문서의 예)
+         *  new Vue({
+         *      filters: {
+         *          capitalize: function(value) {
+         *              if(!value) return ''
+         *              value = value.toString()
+         *              return value.charAt(0).toUpperCase() + value.slice(1)
+         *          }
+         *      }
+         *  })
+         *
+         *  필터는 체이닝이 가능하며 Javascript 함수이므로 전달인자가 존재한다.
+         *  {{ message | filterA | filterB('arg1', 'arg2') }}
+         *
+         *  전달인자가 있을 경우 필드에 +1 번째의 인자로 전달됩니다. ( 첫번째 인자는 필터가 적용되는 값이 들어가기 때문입니다. )
+         *  예) arg1은 두번째 인자로 전달됩니다..
+         *
+         * */
+    </script>
+</head>
+<body>
+<div id="app">
+    <!-- {{  }} Mustache 보간법을 이용한 데이터 바인딩 -->
+    <span>{{ msg }}</span>
+    <!-- 인자로 전달된 필터 적용 -->
+    <span>{{ msg | capitalize(1, 'hello') }}</span>
+    <!-- 필터 체이닝 적용 -->
+    <span>{{ msg | capitalize(2, 'test') | firstChar }}</span>
+</div>
+<script src="./../source/js/vue/vue.js"></script>
+<script>
+    var testApp = new Vue({
+        el: '#app',
+        data: {
+            msg: 'test'
+        },
+        filters: {
+            capitalize: function (value, arg1, arg2) {
+                console.log(arg1)
+                console.log(arg2)
+                if (!value) return ''
+                value = value.toString()
+                return value.charAt(0).toUpperCase() + value.slice(1)
+            },
+            firstChar: function(value) {
+                if(!value) return ''
+                value = value.split('')[0]
+                return value
+            }
+        }
+    })
+</script>
+</body>
+</html>
